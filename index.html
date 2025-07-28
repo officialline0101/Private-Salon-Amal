@@ -104,7 +104,7 @@
         }
 
         h1 {
-            background: linear-gradient(135deg, #ebb4b4, #ca8d8d);
+            background: linear-gradient(135deg, #ffcaca, #ca8d8d);
             color: white;
             padding: 20px;
             border-radius: 0 15px 0px 45px;
@@ -164,12 +164,12 @@
             align-items: center;
             justify-content: center;
             background: white;
-            color: #ebb4b4;
+            color: #ffcaca;
             font-weight: bold;
             font-size: 0.9em;
             border-radius: 4px;
             padding: 2px 6px;
-            border: 2px solid #ebb4b4;
+            border: 2px solid #ffcaca;
         }
 
         input[type="text"],
@@ -296,7 +296,7 @@
         }
 
         .calendar td.selected {
-            background-color: #ebb4b4;
+            background-color: #ffcaca;
             color: #fff;
         }
 
@@ -516,7 +516,7 @@
 
         .highlight-background {
             cursor: pointer;
-            background-color: #ebb4b4;
+            background-color: #ffcaca;
             padding: 10px;
             border-radius: 6px;
             font-size: 18px;
@@ -579,7 +579,7 @@
 
         input:focus,
         textarea:focus {
-            border-color: #ebb4b4;
+            border-color: #ffcaca;
             outline: none;
             box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
         }
@@ -588,7 +588,7 @@
             padding: 12px;
             border: none;
             border-radius: 6px;
-            background-color: #ebb4b4;
+            background-color: #ffcaca;
             color: #000000;
             font-size: 16px;
             cursor: pointer;
@@ -657,7 +657,7 @@
             left: 50%;
             transform: translate(-50%, -10px);
             /* Y方向に上げる */
-            background-color: #ebb4b4;
+            background-color: #ffcaca;
             color: #fff;
             padding: 3px 12px;
             /* ボックスのパディングを縮小 */
@@ -703,6 +703,80 @@
         .section {
             padding: 50px 10px;
             margin-top: 30px;
+        }
+
+        .treatment-container {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffffff;
+            color: #333;
+            border-radius: 8px;
+            border: 1px solid #ff8ca7;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+            margin: auto;
+        }
+
+        .treatment-image {
+            text-align: center;
+            margin-top: 15px;
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #ff8ca7;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 15px auto;
+        }
+
+        .treatment-description {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #fafafa;
+            color: #555;
+            border-radius: 8px;
+            border: 1px solid #ff8ca7;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+            max-width: 350px;
+            margin: 15px auto;
+        }
+
+        .treatment-price {
+            margin-top: 0px;
+            padding: 0px;
+            background: #fff;
+            color: #333;
+            border-radius: 0px;
+            border: 0px solid #ff8ca7;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: right;
+            max-width: 350px;
+            margin: 15px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .spinner-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 24px;
+            color: #4A4A4A;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.2;
         }
     </style>
 </head>
@@ -813,7 +887,7 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             liff.init({
-                liffId: '2007824526-4Y7BRyyG'
+                liffId: ''
             }).then(() => {
                 console.log('LIFF初期化成功');
             }).catch((err) => {
@@ -1014,31 +1088,74 @@
             // カレンダーを更新するために取得する日付を渡す
             fetchAvailability(currentDate);
 
+            function createTreatmentContent(title, imageUrl, description, price, time) {
+                return `
+        <div class="treatment-container">
+            <div style="font-size: 18px; font-weight: bold;">${title}</div>
+        </div>
+
+        <div class="treatment-image">
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
+            </div>
+            <img src="${imageUrl}" alt="${title}" style="width: 100%; height: 100%; display: none;" 
+                 onload="this.style.display='block'; this.previousElementSibling.style.display='none';">
+        </div>
+
+        <div class="treatment-description">${description}</div>
+
+        <div class="treatment-price">
+        </div>`;
+            }
+
             if (treatmentId === 'treatment1') {
-                treatmentText.innerHTML = `<div style="text-align: left;">初回¥5,000‼️  ※クーポン併用不可<br>
-通常 ¥10,000 が半額‼️初めての方オススメ⭐️<br>
-カウンセリング→お着替え→足湯→施術<br>
-身体を改善したいならまずは骨盤から！</div>`;
+                treatmentText.innerHTML = createTreatmentContent(
+                    '骨盤矯正60分',
+                    'https://www.dropbox.com/scl/fi/b6uad8tfpc8p8lm1niv4z/dsdasda.png?rlkey=o7wj85hu043o1aaw4l5lg989y&st=17opkvmv&raw=1',
+                    '初回¥5,000‼️  ※クーポン併用不可<br>通常 ¥10,000 が半額‼️初めての方オススメ⭐️<br>カウンセリング→お着替え→足湯→施術<br>身体を改善したいならまずは骨盤から！',
+                    '￥7,000',
+                    '120分'
+                );
             } else if (treatmentId === 'treatment2') {
-                treatmentText.innerHTML = `<div style="text-align: left;">60分上半身or下半身初回¥5,000<br>
-通常¥10,000が半額‼️ ※クーポン併用不可<br>
-超音波で脂肪細胞を破壊‼️<br>
-セルライト・むくみが気になるあなたに‼️</div>`;
+                treatmentText.innerHTML = createTreatmentContent(
+                    '痩身キャビテーション60分',
+                    'https://www.dropbox.com/scl/fi/458a3bh02yofi5gkska80/cxzcxzcxzc.png?rlkey=3pyycne052pczlmm8sdl2ad8a&st=vcds0vve&raw=1',
+                    '<div style="text-align: left;">60分上半身or下半身初回¥5,000<br>通常¥10,000が半額‼️ ※クーポン併用不可<br>超音波で脂肪細胞を破壊‼️<br>セルライト・むくみが気になるあなたに‼️',
+                    '￥5,500',
+                    '90分'
+                );
             } else if (treatmentId === 'treatment3') {
-                treatmentText.innerHTML = `<div style="text-align: left;">¥16,000 <br>
-お着替えして頂き足湯で温めてから施術します。<br>
-体の歪み・巻き肩・ポッコリお腹・便秘・ガニ股O脚・むくみがある人にオススメ‼️<br>
-１度で効果実感✨</div>`;
+                treatmentText.innerHTML = createTreatmentContent(
+                    '全身ケアスタンダード90分',
+                    'https://www.dropbox.com/scl/fi/342s9zjiko22ddpd9hjsj/imgi_6_w720.png?rlkey=27vwfroxnfrljg8wfyva3soy1&st=48dvf76s&raw=1',
+                    '¥16,000 <br>お着替えして頂き足湯で温めてから施術します。<br>体の歪み・巻き肩・ポッコリお腹・便秘・ガニ股O脚・むくみがある人にオススメ‼️<br>１度で効果実感✨</div>',
+                    '￥22,000',
+                    '120分'
+                );
             } else if (treatmentId === 'treatment4') {
-                treatmentText.innerHTML = `<div style="text-align: left;">¥20,000 しっかり体を治したい人向け⭐️<br>
-お着替えして頂き足湯で温めてから施術します。<br>
-お客様に合わせて骨格矯正・トークセン・レイキヒーリング・チャクラホットストーンなどの手法を合わせて施術します＊自宅で出来るストレッチ講座付き＊</div>`;
+                treatmentText.innerHTML = createTreatmentContent(
+                    '全身ケアプレミアム120分',
+                    'https://www.dropbox.com/scl/fi/342s9zjiko22ddpd9hjsj/imgi_6_w720.png?rlkey=27vwfroxnfrljg8wfyva3soy1&st=48dvf76s&raw=1',
+                    '¥20,000 しっかり体を治したい人向け⭐️<br>お着替えして頂き足湯で温めてから施術します。<br>お客様に合わせて骨格矯正・トークセン・レイキヒーリング・チャクラホットストーンなどの手法を合わせて施術します＊自宅で出来るストレッチ講座付き＊',
+                    '￥7,500',
+                    '90分'
+                );
             } else if (treatmentId === 'treatment5') {
-                treatmentText.innerHTML = `<div style="text-align: left;">¥19,000<br>
-お着替え→足湯→骨盤矯正→キャビテーションRF(脂肪温め超音波で破壊) 足のむくみに特化した施術です✨</div>`;
+                treatmentText.innerHTML = createTreatmentContent(
+                    'むくみ徹底撃退120分',
+                    'https://www.dropbox.com/scl/fi/kw59sdhx5qght1of3trmu/dsacxzcxzcz.png?rlkey=zmwh3fqq2if7owdutlnj0pol1&st=snousk1t&raw=1',
+                    '¥19,000<br>お着替え→足湯→骨盤矯正→キャビテーションRF(脂肪温め超音波で破壊) 足のむくみに特化した施術です✨',
+                    '￥3,500',
+                    '30分'
+                );
             } else if (treatmentId === 'treatment6') {
-                treatmentText.innerHTML = `<div style="text-align: left;">対面¥4,000 遠隔¥3,000<br>
-レイキは誰の身体にも流れている生命エネルギーです✨現在世界で西洋レイキとして保険治療で受けれるほど列記てした治療と認知され普及しています🙌　効果＊自己治癒力や免疫力活性化＊</div>`;
+                treatmentText.innerHTML = createTreatmentContent(
+                    'レイキヒーリング30分',
+                    'https://www.dropbox.com/scl/fi/s16a6tastga4n0sbtu9fn/dsadsadsadadsadas.png?rlkey=ye3sa473kdjuzkv0y1e0ab81c&st=gey94tse&raw=1',
+                    '対面¥4,000 遠隔¥3,000<br>レイキは誰の身体にも流れている生命エネルギーです✨現在世界で西洋レイキとして保険治療で受けれるほど列記てした治療と認知され普及しています🙌　効果＊自己治癒力や免疫力活性化＊',
+                    '￥6,600',
+                    '60分'
+                );
             } else {
                 treatmentText.innerHTML = '';
             }
@@ -1211,7 +1328,7 @@
                 return;
             }
 
-            const url = 'https://script.google.com/macros/s/AKfycbzS3Xru8nAdaAekPz9SPiQqbR2Q6G_xmqFfFxhD_B7fQqtqaBMNKyZ6K_Oh4AsFnhdD/exec' +
+            const url = 'https://script.google.com/macros/s/AKfycbwCxnJaxGZ46c3TnnesuZcD_zuxuVoSHoDHo5MxkRzChcK5vZDwBs4HstzkXO-KLyuDYA/exec' +
                 `?startTime=${startTime.toISOString()}&endTime=${endTime.toISOString()}`;
 
             try {
