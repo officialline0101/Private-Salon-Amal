@@ -818,6 +818,9 @@
             <button type="button" onclick="selectSymptom(this, 'treatment4')" data-price="15000">全身ケアプレミアム120分</button>
             <button type="button" onclick="selectSymptom(this, 'treatment5')" data-price="15000">むくみ徹底撃退120分</button>
             <button type="button" onclick="selectSymptom(this, 'treatment6')" data-price="15000">レイキヒーリング30分</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment7')" data-price="15000">矯正＋巡らせワーク</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment8')" data-price="15000">矯正＋整えワーク</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment9')" data-price="15000">矯正＋美姿勢ワーク</button>
         </div>
 
         <div class="label">希望日時<span class="required">必須</span></div>
@@ -913,6 +916,9 @@
         let selectedirradiationsTime = 0; // 訪問回数で選択された時間
 
         let menuTimes = {
+            '矯正＋巡らせワーク': 90,
+            '矯正＋整えワーク': 90,
+            '矯正＋美姿勢ワーク': 90,
             '骨盤矯正60分': 90,
             '痩身キャビテーション60分': 90,
             '全身ケアスタンダード90分': 120,
@@ -1150,6 +1156,30 @@
                     '対面¥4,000 遠隔¥3,000<br>レイキは誰の身体にも流れている生命エネルギーです✨現在世界で西洋レイキとして保険治療で受けれるほど列記てした治療と認知され普及しています🙌　効果＊自己治癒力や免疫力活性化＊',
                     '￥6,600',
                     '60分'
+                );
+            } else if (treatmentId === 'treatment7') {
+                treatmentText.innerHTML = createTreatmentContent(
+                    '矯正＋巡らせワーク',
+                    'https://www.dropbox.com/scl/fi/zy5fa3ofagc9huatz44ai/imgi_24_w480.png?rlkey=u70elq1fte6om6bdeye16sipr&st=bqh3df6z&raw=1',
+                    矯正60分+巡らせワーク30分¥12,000<br>巡らせワークはお客様に合わせた体の巡りを良くする為のストレッチをご自宅でも出来るようにサポートしながらやっていきます。<br>2回分購入して頂きますと¥2,000OFF🉐',
+                    '¥12,000',
+                    '90分'
+                );
+            } else if (treatmentId === 'treatment8') {
+                treatmentText.innerHTML = createTreatmentContent(
+                    'レイキヒーリング30分',
+                    'https://www.dropbox.com/scl/fi/zy5fa3ofagc9huatz44ai/imgi_24_w480.png?rlkey=u70elq1fte6om6bdeye16sipr&st=bqh3df6z&raw=1',
+                    '矯正60分＋整えワーク30分¥12,000<br>整えワークは巡らせワークの次の段階になります。整えた体を保てるようにお客様に合わせたストレッチやトレーニングをサポートしながらご自宅ても出来るようにやっていきます。<br>2回分購入して頂きます¥2,000OFF🉐',
+                    '¥12,000',
+                    '90分'
+                );
+            } else if (treatmentId === 'treatment9') {
+                treatmentText.innerHTML = createTreatmentContent(
+                    'レイキヒーリング30分',
+                    'https://www.dropbox.com/scl/fi/zy5fa3ofagc9huatz44ai/imgi_24_w480.png?rlkey=u70elq1fte6om6bdeye16sipr&st=bqh3df6z&raw=1',
+                    '矯正60分＋美姿勢ワーク30分¥12,000<br>美姿勢ワークはワークの総仕上げになります！立ち姿勢から座り姿勢、歩き方まで美しいなりたい自分に💕<br>2回分購入して頂きます¥2,000OFF🉐',
+                    '¥12,000',
+                    '90分'
                 );
             } else {
                 treatmentText.innerHTML = '';
