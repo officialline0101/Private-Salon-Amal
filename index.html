@@ -731,6 +731,24 @@
             margin: 15px auto;
         }
 
+        /* 正方形で表示したい画像用（縦横比を保ったまま中央をトリミング） */
+        .treatment-image.square {
+            max-width: 300px;
+            height: 0;
+            padding-bottom: 100%;
+            /* 幅と同じ高さ＝正方形 */
+        }
+
+        .treatment-image.square img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: contain;
+            /* 画像全体を切らずに収める */
+            object-position: center;
+            background-color: #fff;
+        }
+
         .treatment-description {
             margin-top: 15px;
             padding: 15px;
@@ -1100,13 +1118,14 @@
             // カレンダーを更新するために取得する日付を渡す
             fetchAvailability(currentDate);
 
-            function createTreatmentContent(title, imageUrl, description, price, time) {
+            // imageShape に 'square' を指定すると画像を正方形で表示します
+            function createTreatmentContent(title, imageUrl, description, price, time, imageShape) {
                 return `
         <div class="treatment-container">
             <div style="font-size: 18px; font-weight: bold;">${title}</div>
         </div>
 
-        <div class="treatment-image">
+        <div class="treatment-image ${imageShape === 'square' ? 'square' : ''}">
             <div class="spinner-overlay">
                 <div class="spinner"></div>
             </div>
@@ -1155,10 +1174,11 @@
             } else if (treatmentId === 'treatment12') {
                 treatmentText.innerHTML = createTreatmentContent(
                     '脳セラピー',
-                    'https://www.dropbox.com/scl/fi/s16a6tastga4n0sbtu9fn/dsadsadsadadsadas.png?rlkey=ye3sa473kdjuzkv0y1e0ab81c&st=gey94tse&raw=1',
+                    'https://www.dropbox.com/scl/fi/addmns83r47vh2vxq3ndw/.jpg?rlkey=rwe8oj9gnam4v454l0e495atg&st=3hjj0z0s&raw=1',
                     '¥4,000（施術時間20分）<br>※2026年8月1日からご予約いただけます。',
                     '¥4,000',
-                    '20分'
+                    '20分',
+                    'square'
                 );
             } else if (treatmentId === 'treatment5') {
                 treatmentText.innerHTML = createTreatmentContent(
