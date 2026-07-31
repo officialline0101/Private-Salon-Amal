@@ -815,6 +815,7 @@
             <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">骨盤矯正60分</button>
             <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">全身ケアスタンダード90分</button>
             <button type="button" onclick="selectSymptom(this, 'treatment4')" data-price="15000">全身ケアプレミアム120分</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment12')" data-price="4000">脳セラピー</button>
             <button type="button" onclick="selectSymptom(this, 'treatment10')" data-price="4000">骨盤底筋トレーニングチェア30分</button>
             <button type="button" onclick="selectSymptom(this, 'treatment11')" data-price="8000">骨盤底筋ケアコース60分平日限定</button>
             <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">痩身キャビテーション60分</button>
@@ -925,10 +926,16 @@
             '痩身キャビテーション60分': 90,
             '全身ケアスタンダード90分': 120,
             '全身ケアプレミアム120分': 150,
+            '脳セラピー': 50,
             'むくみ徹底撃退120分': 150,
             'レイキヒーリング30分': 60,
             '骨盤底筋トレーニングチェア30分': 60,
             '骨盤底筋ケアコース60分平日限定': 120
+        };
+
+        // メニューごとの予約開始日（この日より前の枠は選択できない）
+        let menuAvailableFrom = {
+            '脳セラピー': new Date(2026, 7, 1, 0, 0, 0, 0) // 2026年8月1日から予約可能
         };
 
 
@@ -1144,6 +1151,14 @@
                     '¥20,000 しっかり体を治したい人向け⭐️<br>お着替えして頂き足湯で温めてから施術します。<br>お客様に合わせて骨格矯正・トークセン・レイキヒーリング・チャクラホットストーンなどの手法を合わせて施術します＊自宅で出来るストレッチ講座付き＊',
                     '￥7,500',
                     '90分'
+                );
+            } else if (treatmentId === 'treatment12') {
+                treatmentText.innerHTML = createTreatmentContent(
+                    '脳セラピー',
+                    'https://www.dropbox.com/scl/fi/s16a6tastga4n0sbtu9fn/dsadsadsadadsadas.png?rlkey=ye3sa473kdjuzkv0y1e0ab81c&st=gey94tse&raw=1',
+                    '¥4,000（施術時間20分）<br>※2026年8月1日からご予約いただけます。',
+                    '¥4,000',
+                    '20分'
                 );
             } else if (treatmentId === 'treatment5') {
                 treatmentText.innerHTML = createTreatmentContent(
@@ -1485,6 +1500,16 @@ const times = [
 
                     // 終了時間が翌日 (0時以降) になる場合は✕に設定
                     if (slotEnd.getDate() !== slotStart.getDate()) {
+                        cell.textContent = '✕';
+                        cell.classList.add('unavailable');
+                        continue;
+                    }
+
+                    // 選択中メニューに予約開始日が設定されている場合、それより前の枠は✕にする
+                    const availableFrom = (selectedSymptom && selectedSymptom.length > 0)
+                        ? menuAvailableFrom[selectedSymptom[0]]
+                        : null;
+                    if (availableFrom && slotStart < availableFrom) {
                         cell.textContent = '✕';
                         cell.classList.add('unavailable');
                         continue;
